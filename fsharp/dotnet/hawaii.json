@@ -1,0 +1,9 @@
+{
+    "schema": "https://data.colorado.gov/api/odata/v4/7s5z-vewr/$metadata",
+    "project": "licenses",
+    "output": "licenses",
+    "target": "fable",
+    "synchronous": false,
+    "asyncReturnType": "async",
+    "resolveReferences": true
+}

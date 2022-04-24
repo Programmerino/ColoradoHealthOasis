@@ -1,0 +1,76 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType Condition="'$(library)' == ''">Exe</OutputType>
+    <OutputType Condition="'$(library)' == '1'">Library</OutputType>
+    <OutputType Condition="'$(library)' == '0'">Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <RuntimeIdentifiers Condition="'$(target)' == ''">linux-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers Condition="'$(target)' != ''">$(target)</RuntimeIdentifiers>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <PublishTrimmed>true</PublishTrimmed>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <TrimMode>link</TrimMode>
+    <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
+    <IlcDisableReflection>true</IlcDisableReflection>
+    <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
+    <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
+    <AutoreleasePoolSupport>false</AutoreleasePoolSupport>
+    <DebuggerSupport>false</DebuggerSupport>
+    <EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
+    <EnableUnsafeUTF7Encoding>false</EnableUnsafeUTF7Encoding>
+    <EventSourceSupport>false</EventSourceSupport>
+    <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
+    <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
+    <UseNativeHttpHandler>true</UseNativeHttpHandler>
+    <UseSystemResourceKeys>true</UseSystemResourceKeys>
+    <CustomResourceTypesSupport>false</CustomResourceTypesSupport>
+    <EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization>false</EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization>
+    <BuiltInComInteropSupport>false</BuiltInComInteropSupport>
+    <EnableCppCLIHostActivation>false</EnableCppCLIHostActivation>
+    <_EnableConsumingManagedCodeFromNativeHosting>false</_EnableConsumingManagedCodeFromNativeHosting>
+    <NullabilityInfoContextSupport>false</NullabilityInfoContextSupport>
+    <_AggressiveAttributeTrimming>true</_AggressiveAttributeTrimming>
+    <DebugSymbols>false</DebugSymbols>
+    <NativeDebugSymbols>false</NativeDebugSymbols>
+    <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
+    <TrimmerDefaultAction>link</TrimmerDefaultAction>
+    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+    <PackageId Condition="'$(name)' == ''">GEOGen</PackageId>
+    <PackageId Condition="'$(name)' != ''">$(name)</PackageId>
+    <Version Condition="'$(version)' == ''">0.0.0</Version>
+    <Version Condition="'$(version)' != ''">$(version)</Version>
+    <Authors>Davis Davalos-DeLosh</Authors>
+    <Company>Davis Davalos-DeLosh</Company>
+    <PackageDescription>...</PackageDescription>
+    <RepositoryUrl Condition="'$(name)' == ''">https://github.com/Programmerino/GEOGen</RepositoryUrl>
+    <RepositoryUrl Condition="'$(name)' != ''">https://github.com/Programmerino/$(name)</RepositoryUrl>
+</PropertyGroup>
+
+  <Target Name="ConfigureTrimming" BeforeTargets="PrepareForILLink">
+    <ItemGroup>
+      <TrimmerRootAssembly Include="@(IntermediateAssembly)" />
+      <ManagedAssemblyToLink>
+        <IsTrimmable>true</IsTrimmable>
+      </ManagedAssemblyToLink>
+    </ItemGroup>
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="FSharp.Data.TypeProviders" Version="6.0.1" />
+    <PackageReference Include="GeoJSON.Net" Version="1.2.19" />
+    <PackageReference Include="GeoJSON.Net.Contrib.MsSqlSpatial" Version="0.3.6" />
+    <PackageReference Include="Helpers" Version="0.1.0.2" />
+    <RdXmlFile Condition="'$(useFable)' != '1'" Include="FSharp.Core.xml" />
+    <RuntimeHostConfigurationOption Condition="'$(useFable)' != '1'" Include="Switch.System.Reflection.Disabled.DoNotThrowForNames" Value="true" />
+    <RuntimeHostConfigurationOption Condition="'$(useFable)' != '1'" Include="Switch.System.Reflection.Disabled.DoNotThrowForAssembly" Value="true" />
+    <RuntimeHostConfigurationOption Condition="'$(useFable)' != '1'" Include="Switch.System.Reflection.Disabled.DoNotThrowForAttributes" Value="true" />
+    <RuntimeHostConfigurationOption Condition="'$(useFable)' != '1'" Include="Switch.System.Reflection.Assembly.SimulatedCallingAssembly" Value="true" />
+    <PackageReference Include="FSharp.Core" Version="6.0.2" />
+    <PackageReference Condition="'$(useFable)' != '1'" Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-preview.4.22180.1" />
+    <PackageReference Include="FSharpPlus" Version="1.2.2" />
+    <PackageReference Include="FSharp.Data" Version="4.2.7" />
+    <Content Condition="'$(useFable)' == '1'" Include="*.fsproj; **\*.fs; **\*.fsi" PackagePath="fable\" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+</Project>
