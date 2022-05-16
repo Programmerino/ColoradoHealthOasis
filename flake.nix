@@ -29,7 +29,7 @@
         version = let _ver = builtins.getEnv "GITVERSION_SEMVER"; in if _ver == "" then "0.0.0" else "${_ver}";
         configArg = "";
         lockFile = ./fsharp/dotnet/packages.lock.json;
-        nugetSha256 = "sha256-hLOS83YXZQn4zweJvn1AaLq1FPBfGv1guDE6fdCyHFU=";
+        nugetSha256 = "sha256-zs09cpXkc25NvObQjj7aBVfpL1CnCWJ6Xwc+6ugo7WQ=";
         project = "";
         FSharpEntry = "App.fs";
         FSharpOut = "App.js";
@@ -41,24 +41,6 @@
         sdk = pkgs.dotnet-sdk;
         jdk = pkgs.zulu;
         nodejs = pkgs.nodejs-12_x;
-
-        futlib = pkgs.stdenv.mkDerivation {
-          inherit version;
-          name = "${name}-futlib";
-          src = ./futhark;
-          dontInstall = true;
-          dontConfigure = true;
-          dontFixup = true;
-          nativeBuildInputs = [ pkgs.emscripten ];
-          EMCFLAGS = "-flto -g0 -O3 -s ALLOW_MEMORY_GROWTH -s NO_PTHREAD_POOL_SIZE_STRICT -s SINGLE_FILE -s NO_FILESYSTEM -s ASSERTIONS=1 -s MODULARIZE -s EXPORT_ES6 -s NO_DYNAMIC_EXECUTION -s WASM_BIGINT -s NO_INVOKE_RUN -s EVAL_CTORS=2 -s FULL_ES2 -s TEXTDECODER=2 -s ENVIRONMENT=web,webview,worker";
-          buildPhase = ''
-            mkdir -p $out
-            ${pkgs.futhark}/bin/futhark wasm-multicore --library ${futTarget} -o $out/${futTarget}
-            rm $out/*.c
-            rm $out/*.h
-            rm $out/*.class.js
-          '';
-        };
 
         fsharp-modules =
             pkgs.mkYarnModules {
@@ -114,14 +96,12 @@
           dontConfigure = true;
           buildPhase = ''
               mkdir -p $out/{js,css}
-              cp -rs ${futlib}/. .
               cp -rs ${fsharp-modules}/node_modules ./node_modules
               cp -r ${fsharp}/. .
               cp ${./fsharp/deps/esbuild.js} ./esbuild.js
               ${nodejs}/bin/node esbuild.js $PWD/${FSharpOut}
               mv $out/*.js $out/js/${FSharpOut}
               mv $out/*.css $out/css/bundle.css
-              cp -s ${futlib}/*js $out/js
           '';
         };
 
@@ -137,14 +117,13 @@
                     text = ''
                       [devshell]
                       startup.main.text = """
-                      eval \"$(starship init bash)\"
+                      #eval \"(starship init bash)\"
                       function watchBuild() {
                         if [[ "$PWD" == *"dev"* ]]; then
                           function clean_up {
                                kill -9 $WATCHER_PID
                           }
                           trap clean_up SIGHUP SIGINT SIGTERM
-                          export EMCFLAGS="${futlib.EMCFLAGS}"
                           cd ..
                           cp -rlf $PWD/web/www/. $PWD/dev/
                           cp -rsf $PWD/fsharp/deps/. $PWD/dev/
@@ -158,6 +137,31 @@
                           WATCHER_PID=$!
                           fable watch src -o js --runFast "start.sh"
                           kill -9 $WATCHER_PID
+                        else
+                          echo Please move to the dev directory
+                        fi
+                      }
+
+                      function build() {
+                        if [[ "$PWD" == *"dev"* ]]; then
+                          cd ..
+                          cp -rlf $PWD/web/www/. $PWD/dev/
+                          cp -rsf $PWD/fsharp/deps/. $PWD/dev/
+                          cp -rlf $PWD/fsharp/dotnet/. $PWD/dev/src
+                          cd dev
+                          mkdir public
+                          cp *.png ./public
+                          cp browserconfig.xml ./public
+                          cp favicon.ico ./public
+                          cp robots.txt ./public
+                          cp *.svg ./public
+                          cp *.webmanifest ./public
+                          mkdir -p deps
+                          ln -sf $PWD/node_modules $PWD/deps/node_modules
+                          yarn install
+                          fable src -o js
+                          yarn exec -- vite build --minify terser
+                          echo Result is in dist!
                         else
                           echo Please move to the dev directory
                         fi
@@ -454,7 +458,7 @@
             DOTNET_CLI_HOME = "/tmp/dotnet_cli";
             DOTNET_ROOT = "${sdk}";
             ANDROID_SDK_ROOT="${androidComposition.androidsdk}/libexec/android-sdk";
-            buildInputs = futlib.nativeBuildInputs ++ fsharp.nativeBuildInputs ++ packages.default.extraBuildInputs ++ [ pkgs.yarn fable pkgs.starship pkgs.inotifyTools nodejs pkgs.futhark ];
+            buildInputs = fsharp.nativeBuildInputs ++ packages.default.extraBuildInputs ++ [ pkgs.yarn fable pkgs.starship pkgs.inotifyTools nodejs pkgs.futhark ];
             shellHook = ''
               exec ${androidEnv.devShell."${system}"}
             '';
@@ -463,32 +467,6 @@
           # Necessary for flake-compat
           devShell = devShells.default;
 
-          checks.futlib = pkgs.stdenv.mkDerivation {
-            src = ./futhark;
-            nativeBuildInputs = futlib.nativeBuildInputs;
-            name = "checks.futlib";
-            doCheck = true;
-            phases = [ "unpackPhase" "buildPhase" "checkPhase" ];
-            buildPhase = ''
-              mkdir -p $out
-              touch $out/noop
-            '';
-            checkPhase = ''
-              find . -name "*.actual" -type f -delete
-              find . -name "*.expected" -type f -delete
-
-              set +e
-              ${pkgs.futhark}/bin/futhark test --backend=c -f-compiled --no-terminal .
-              if [ $? -ne 0 ]; then
-                  echo "Checks failed"
-                  echo "Expected: "
-                  for i in *.expected ; do cat "$i" | futhark dataset --text; done
-                  echo "Got: "
-                  for i in *.actual ; do cat "$i" | futhark dataset --text; done
-                  exit 1
-              fi
-            '';
-          };
 
           packages.i686-windows = mkPackageElectron "i686-windows";
           packages.x86_64-windows = mkPackageElectron "x86_64-windows";

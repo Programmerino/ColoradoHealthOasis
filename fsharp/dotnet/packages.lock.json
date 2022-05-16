@@ -19,17 +19,6 @@
           "Thoth.Json": "6.0.0"
         }
       },
-      "Fable.Elmish.HMR": {
-        "type": "Direct",
-        "requested": "[6.0.0-beta-002, )",
-        "resolved": "6.0.0-beta-002",
-        "contentHash": "z7ujZMZYgkum+yTlfgNqBo6gOMUglOucw7NVl5kGfGnromyRUhyLYTlsGvYDhUxwUnpUDZFK2Natgt+bvtsHKg==",
-        "dependencies": {
-          "FSharp.Core": "4.7.2",
-          "Fable.Core": "3.6.1",
-          "Fable.Elmish.React": "4.0.0-beta-1"
-        }
-      },
       "Fable.Elmish.React": {
         "type": "Direct",
         "requested": "[4.0.0-beta-1, )",
@@ -94,24 +83,9 @@
       },
       "FSharp.Core": {
         "type": "Direct",
-        "requested": "[6.0.1, )",
-        "resolved": "6.0.1",
-        "contentHash": "VrFAiW8dEEekk+0aqlbvMNZzDvYXmgWZwAt68AUBqaWK8RnoEVUNglj66bZzhs4/U63q0EfXlhcEKnH1sTYLjw=="
-      },
-      "FSharp.Data": {
-        "type": "Direct",
-        "requested": "[4.2.8, )",
-        "resolved": "4.2.8",
-        "contentHash": "iSMHBxtovIvgMbMtJHetk2+pqDsVH4VBnz0VXkJ8wsnY9FYA2yaKU9Ntlg25Z383IWO/xBmLaBxw6QrpAT7g+g==",
-        "dependencies": {
-          "FSharp.Core": "4.7.2"
-        }
-      },
-      "FSharp.Data.TypeProviders": {
-        "type": "Direct",
-        "requested": "[6.0.1, )",
-        "resolved": "6.0.1",
-        "contentHash": "YB9X1Mljzqt91k/zsujdiaYDa3YX37spwW3o6N5LkZgQg+3ZgUlfWL9nOPhIunMxG/uOziKLFbsznxCgxPzj2g=="
+        "requested": "[6.0.2, )",
+        "resolved": "6.0.2",
+        "contentHash": "8GZqv6buY71KQlWT+cl2eMi+aNX9xQ61RgI3Pzv9zPxPOX6tWCLRrBj0MYQ3h871r2RhiHUl7f0AXUD/POr8eA=="
       },
       "FSharpPlus": {
         "type": "Direct",
@@ -140,19 +114,6 @@
         "contentHash": "st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0"
-        }
-      },
-      "Thoth.Fetch": {
-        "type": "Direct",
-        "requested": "[3.0.1, )",
-        "resolved": "3.0.1",
-        "contentHash": "5i8KQwTFzDEoIjE/fAwCw0GFICCsFzVkVq2w4uU1fRlOqbSfLlUNcCEq6JkeAvQ+Jj7syMKNPSH994T8NswcpA==",
-        "dependencies": {
-          "FSharp.Core": "4.7.2",
-          "Fable.Core": "3.2.8",
-          "Fable.Fetch": "2.1.0",
-          "Fable.Promise": "2.0.0",
-          "Thoth.Json": "6.0.0"
         }
       },
       "Zanaptak.TypedCssClasses": {
@@ -226,17 +187,6 @@
         "dependencies": {
           "FSharp.Core": "4.7.2",
           "Fable.Core": "3.6.1"
-        }
-      },
-      "Fable.Fetch": {
-        "type": "Transitive",
-        "resolved": "2.1.0",
-        "contentHash": "SxRmYAuVfHO3IBLk1CkV32L2jnaDxdcMu+Pe4EH+P2ErYrvgErp0QLUc56kaydWsLfQM86uft+NSapYS3FB0FA==",
-        "dependencies": {
-          "FSharp.Core": "4.6.2",
-          "Fable.Browser.Blob": "1.1.0",
-          "Fable.Core": "3.0.0",
-          "Fable.Promise": "2.0.0"
         }
       },
       "Fable.React": {

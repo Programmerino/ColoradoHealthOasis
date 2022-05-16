@@ -2,5 +2,6 @@
     "files.watcherExclude": {
         "**/target": true
     },
-    "nixEnvSelector.suggestion": false
+    "nixEnvSelector.suggestion": false,
+    "nixEnvSelector.nixFile": "${workspaceRoot}/shell.nix"
 }

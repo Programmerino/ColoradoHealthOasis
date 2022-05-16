@@ -11,7 +11,7 @@ open JSExt
 open MapboxGL
 open Fable.Core.JsInterop
 
-let mapboxGeocoder: MapboxGeocoderStatic = importAll "@mapbox/mapbox-gl-geocoder"
+let mapboxGeocoder: MapboxGeocoderStatic = importDefault "@mapbox/mapbox-gl-geocoder"
 
 type [<AllowNullLiteral>] IExports =
     abstract MapboxGeocoder: MapboxGeocoderStatic

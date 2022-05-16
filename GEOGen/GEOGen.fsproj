@@ -43,7 +43,7 @@
     <Authors>Davis Davalos-DeLosh</Authors>
     <Company>Davis Davalos-DeLosh</Company>
     <PackageDescription>...</PackageDescription>
-    <RepositoryUrl Condition="'$(name)' == ''">https://github.com/Programmerino/GEOGen</RepositoryUrl>
+    <RepositoryUrl Condition="'$(name)' == ''">https://github.com/Programmerino/ColoradoHealthOasis</RepositoryUrl>
     <RepositoryUrl Condition="'$(name)' != ''">https://github.com/Programmerino/$(name)</RepositoryUrl>
 </PropertyGroup>
 
@@ -57,20 +57,21 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="FSharp.Data.TypeProviders" Version="6.0.1" />
+    <PackageReference Include="FSharp.Stats" Version="0.4.5" />
+    <PackageReference Include="FSharp.SystemTextJson" Version="0.17.4" />
     <PackageReference Include="GeoJSON.Net" Version="1.2.19" />
-    <PackageReference Include="GeoJSON.Net.Contrib.MsSqlSpatial" Version="0.3.6" />
+    <!-- <PackageReference Include="GeoJSON.Net.Contrib.MsSqlSpatial" Version="0.3.6" /> -->
     <PackageReference Include="Helpers" Version="0.1.0.2" />
-    <RdXmlFile Condition="'$(useFable)' != '1'" Include="FSharp.Core.xml" />
-    <RuntimeHostConfigurationOption Condition="'$(useFable)' != '1'" Include="Switch.System.Reflection.Disabled.DoNotThrowForNames" Value="true" />
-    <RuntimeHostConfigurationOption Condition="'$(useFable)' != '1'" Include="Switch.System.Reflection.Disabled.DoNotThrowForAssembly" Value="true" />
-    <RuntimeHostConfigurationOption Condition="'$(useFable)' != '1'" Include="Switch.System.Reflection.Disabled.DoNotThrowForAttributes" Value="true" />
-    <RuntimeHostConfigurationOption Condition="'$(useFable)' != '1'" Include="Switch.System.Reflection.Assembly.SimulatedCallingAssembly" Value="true" />
+    <!-- <PackageReference Include="Thoth.Json" Version="7.0.0" /> -->
+    <RdXmlFile Include="FSharp.Core.xml" />
+    <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Disabled.DoNotThrowForNames" Value="true" />
+    <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Disabled.DoNotThrowForAssembly" Value="true" />
+    <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Disabled.DoNotThrowForAttributes" Value="true" />
+    <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Assembly.SimulatedCallingAssembly" Value="true" />
     <PackageReference Include="FSharp.Core" Version="6.0.2" />
-    <PackageReference Condition="'$(useFable)' != '1'" Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-preview.4.22180.1" />
+    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-preview.4.22180.1" />
     <PackageReference Include="FSharpPlus" Version="1.2.2" />
     <PackageReference Include="FSharp.Data" Version="4.2.7" />
-    <Content Condition="'$(useFable)' == '1'" Include="*.fsproj; **\*.fs; **\*.fsi" PackagePath="fable\" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 </Project>

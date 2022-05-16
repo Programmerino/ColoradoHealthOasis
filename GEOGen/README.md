@@ -1,4 +1,6 @@
-# ProjectName
+# GEOGen
+
+See root for more details
 
 ## Building
 

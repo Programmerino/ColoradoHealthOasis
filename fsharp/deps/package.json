@@ -4,14 +4,12 @@
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "^5.0.0",
     "@mapbox/mapbox-sdk": "^0.13.3",
-    "@picocss/pico": "^1.5.0",
     "@types/geojson": "^7946.0.8",
+    "fomantic-ui": "^2.8.8",
     "mapbox": "^1.0.0-beta10",
     "mapbox-gl": "^2.7.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^2.1.2"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@types/mapbox": "^1.6.42",
@@ -25,6 +23,7 @@
     "ts2fable": "^0.8.0-build.655",
     "vite": "2.9.0-beta.3",
     "vite-plugin-cross-origin-isolation": "^0.1.6",
-    "vite-plugin-filter-replace": "^0.1.9"
+    "vite-plugin-filter-replace": "^0.1.9",
+    "vite-plugin-pwa": "^0.12.0"
   }
 }

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "fsautocomplete": {
+      "version": "0.53.1",
+      "commands": [
+        "fsautocomplete"
+      ]
+    },
+    "fantomas-tool": {
+      "version": "4.7.9",
+      "commands": [
+        "fantomas"
+      ]
+    }
+  }
+}
